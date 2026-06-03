@@ -77,7 +77,7 @@ const parseLogLevel = (value: string): LogLevel => {
 };
 
 export const loadEnv = (
-  source: Record<string, string | undefined> = Bun.env,
+  source: Record<string, string | undefined> = process.env,
 ): Env => ({
   ENV: parseAppEnv(source.ENV ?? "development"),
   HOST: source.HOST ?? "0.0.0.0",
