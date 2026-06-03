@@ -1,3 +1,4 @@
+import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
 import { errorMapperPlugin } from "./api/middleware/errorMapper";
 import { metricsPlugin } from "./api/middleware/metrics";
@@ -18,6 +19,7 @@ export interface ServerDependencies extends CheckClaimDependencies {
 
 export const createServer = (deps: ServerDependencies) =>
   new Elysia({ name: "fact-verification-api" })
+    .use(cors())
     .use(requestIdPlugin)
     .use(metricsPlugin(deps.metrics))
     .use(errorMapperPlugin)
