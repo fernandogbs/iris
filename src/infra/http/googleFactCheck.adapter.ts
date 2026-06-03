@@ -24,14 +24,6 @@ interface GoogleFactCheckConfig {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
 
-const inferConfidence = (verdict: ProviderCheck["verdict"]): number => {
-  if (verdict === "uncertain") {
-    return 0.5;
-  }
-
-  return 0.9;
-};
-
 export const createGoogleFactCheckProvider = ({
   apiKey,
   languageCode,
@@ -162,7 +154,7 @@ export const createGoogleFactCheckProvider = ({
       const result: ProviderCheck = {
         claim: claimText,
         verdict,
-        confidence: inferConfidence(verdict),
+        confidence: null,
         source: "fact_api",
         url: typeof firstReview.url === "string" ? firstReview.url : null,
         publisher,

@@ -8,7 +8,7 @@ export type Source = "fact_api" | "ml";
 export interface ProviderCheck {
   claim: string;
   verdict: Verdict;
-  confidence: number;
+  confidence: number | null;
   source: Source;
   url: string | null;
   publisher: string | null;

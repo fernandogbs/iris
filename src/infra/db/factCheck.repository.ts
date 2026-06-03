@@ -14,8 +14,8 @@ type DisplayRow = Record<string, unknown> & {
   claim: string;
   verdict: string;
   verdict_label: string;
-  confidence: number;
-  confidence_percent: string;
+  confidence: number | null;
+  confidence_percent: string | null;
   source: string;
   source_label: string;
   status: string;
@@ -39,7 +39,7 @@ const mapDisplayRow = (row: DisplayRow): FactCheckDisplay => {
     verdict,
     verdictLabel: row.verdict_label,
     confidence: row.confidence,
-    confidencePercent: Number(row.confidence_percent),
+    confidencePercent: row.confidence_percent !== null ? Number(row.confidence_percent) : null,
     source,
     sourceLabel: row.source_label,
     status,

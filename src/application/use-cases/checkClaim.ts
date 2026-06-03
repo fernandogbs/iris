@@ -26,7 +26,7 @@ export interface CheckClaimResponse {
   status: "found" | "predicted";
   data: {
     verdict: ProviderCheck["verdict"];
-    confidence: number;
+    confidence: number | null;
     source: ProviderCheck["source"];
     url: string | null;
   };

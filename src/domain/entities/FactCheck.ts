@@ -6,7 +6,7 @@ export interface FactCheck {
   query: string;
   claim: string;
   verdict: Verdict;
-  confidence: number;
+  confidence: number | null;
   source: Source;
   status: CheckStatus;
   publisher: string | null;

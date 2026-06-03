@@ -18,7 +18,7 @@ export const factChecks = pgTable(
     query: text("query").notNull(),
     claim: text("claim").notNull(),
     verdict: varchar("verdict", { length: 16 }).notNull(),
-    confidence: doublePrecision("confidence").notNull(),
+    confidence: doublePrecision("confidence"),
     source: varchar("source", { length: 16 }).notNull(),
     status: varchar("status", { length: 16 }).notNull(),
     publisher: text("publisher"),
@@ -48,7 +48,7 @@ export const factChecks = pgTable(
     ),
     confidenceRange: check(
       "fact_checks_confidence_range",
-      sql`${table.confidence} >= 0 AND ${table.confidence} <= 1`,
+      sql`${table.confidence} IS NULL OR (${table.confidence} >= 0 AND ${table.confidence} <= 1)`,
     ),
   }),
 );

@@ -9,8 +9,8 @@ export interface FactCheckDisplay {
   claim: string;
   verdict: Verdict;
   verdictLabel: string;
-  confidence: number;
-  confidencePercent: number;
+  confidence: number | null;
+  confidencePercent: number | null;
   source: Source;
   sourceLabel: string;
   status: CheckStatus;
@@ -49,15 +49,15 @@ const formatBrDateTime = (date: Date): string =>
     hour12: false,
   }).format(date);
 
-export const toConfidencePercent = (confidence: number): number =>
-  Math.round(confidence * 1000) / 10;
+export const toConfidencePercent = (confidence: number | null): number | null =>
+  confidence === null ? null : Math.round(confidence * 1000) / 10;
 
 export const buildFactCheckDisplay = (input: {
   id: string;
   query: string;
   claim: string;
   verdict: Verdict;
-  confidence: number;
+  confidence: number | null;
   source: Source;
   status: CheckStatus;
   publisher: string | null;
