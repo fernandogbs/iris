@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import type { FactCheckRepository } from "../../application/ports/FactCheckRepository";
 import type { Source } from "../../application/ports/FactProvider";
-import type { FactCheckDisplay } from "../../domain/display/factCheckDisplay";
+import type { FactCheckDisplay, VerdictLabel } from "../../domain/display/factCheckDisplay";
 import { PersistenceError } from "../../domain/errors/PersistenceError";
 import { isVerdict } from "../../domain/value-objects/Verdict";
 import { err, ok } from "../../shared/result/Result";
@@ -27,6 +27,10 @@ type DisplayRow = Record<string, unknown> & {
   checked_at_br: string;
 };
 
+const VERDICT_LABELS = new Set<VerdictLabel>(["Verdadeiro", "Falso", "Incerto"]);
+const toVerdictLabel = (label: string): VerdictLabel =>
+  VERDICT_LABELS.has(label as VerdictLabel) ? (label as VerdictLabel) : "Incerto";
+
 const mapDisplayRow = (row: DisplayRow): FactCheckDisplay => {
   const verdict = isVerdict(row.verdict) ? row.verdict : "uncertain";
   const source: Source = row.source === "ml" ? "ml" : "fact_api";
@@ -37,7 +41,7 @@ const mapDisplayRow = (row: DisplayRow): FactCheckDisplay => {
     query: row.query,
     claim: row.claim,
     verdict,
-    verdictLabel: row.verdict_label,
+    verdictLabel: toVerdictLabel(row.verdict_label),
     confidence: row.confidence,
     confidencePercent: row.confidence_percent !== null ? Number(row.confidence_percent) : null,
     source,

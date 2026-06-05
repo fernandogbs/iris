@@ -52,7 +52,19 @@ export const checkRoute = (deps: CheckRouteDependencies) =>
         verdict: result.value.data.verdict,
       });
 
-      return result.value.display;
+      const verdict =
+        result.value.data.verdict === "uncertain"
+          ? "Incerto"
+          : result.value.data.verdict;
+
+      return {
+        id: result.value.id,
+        status: result.value.status,
+        data: {
+          ...result.value.data,
+          verdict,
+        },
+      };
     },
     {
       body: checkRequestSchema,

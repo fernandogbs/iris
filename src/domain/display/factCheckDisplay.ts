@@ -2,13 +2,14 @@ import type { Source } from "../../application/ports/FactProvider";
 import type { Verdict } from "../value-objects/Verdict";
 
 export type CheckStatus = "found" | "predicted";
+export type VerdictLabel = "Verdadeiro" | "Falso" | "Incerto";
 
 export interface FactCheckDisplay {
   id: string;
   query: string;
   claim: string;
   verdict: Verdict;
-  verdictLabel: string;
+  verdictLabel: VerdictLabel;
   confidence: number | null;
   confidencePercent: number | null;
   source: Source;
@@ -22,7 +23,7 @@ export interface FactCheckDisplay {
   checkedAtBr: string;
 }
 
-const verdictLabels: Record<Verdict, string> = {
+const verdictLabels: Record<Verdict, VerdictLabel> = {
   true: "Verdadeiro",
   false: "Falso",
   uncertain: "Incerto",
