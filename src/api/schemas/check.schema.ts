@@ -30,17 +30,4 @@ export const checkRequestSchema = t.Object({
   }),
 });
 
-export const checkResponseSchema = t.Object({
-  id: t.Nullable(t.String({ format: "uuid" })),
-  status: t.Union([t.Literal("found"), t.Literal("predicted")]),
-  data: t.Object({
-    verdict: t.Union([
-      t.Literal("true"),
-      t.Literal("false"),
-      t.Literal("uncertain"),
-    ]),
-    confidence: t.Nullable(t.Number({ minimum: 0, maximum: 1 })),
-    source: t.Union([t.Literal("fact_api"), t.Literal("ml")]),
-    url: t.Nullable(t.String()),
-  }),
-});
+export const checkResponseSchema = factCheckDisplaySchema;

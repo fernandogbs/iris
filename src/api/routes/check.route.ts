@@ -52,11 +52,7 @@ export const checkRoute = (deps: CheckRouteDependencies) =>
         verdict: result.value.data.verdict,
       });
 
-      return {
-        id: result.value.id,
-        status: result.value.status,
-        data: result.value.data,
-      };
+      return result.value.display;
     },
     {
       body: checkRequestSchema,
